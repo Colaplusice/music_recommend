@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<table class="table">
+        <thead>
+                <tr>
+                <th>歌曲名</th>
+                <th>评论内容</th>
+                <th>评论时间</th>
+                <th>删除</th>
+                </tr>
+        </thead>
+        <tbody>
+                {% for comment in comments %}
+                <tr>
+                        <td>{{ comment.music.name }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.addtime }}</td>
+                        <td><a href="{% url 'delete_comment' comment.id %}">删除</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>
+{% endblock %}
+

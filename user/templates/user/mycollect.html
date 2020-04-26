@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>歌曲名</th>
+            <th>导演</th>
+            <th>标签</th>
+            <th>查看</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in music %}
+            <tr>
+                <td>{{ i.name}}</td>
+                <td>{{ i.director }}</td>
+                <td> {% if i.tags.all %}
+                    {% for tag in i.tags.all %}
+                    {{ tag }}
+                    {% endfor %}
+                    {% else %}
+                    无
+                {% endif %}
+                </td>
+                <td><a href="{% url 'music' i.id %}">查看</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

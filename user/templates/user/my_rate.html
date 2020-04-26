@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<table class="table">
+        <thead>
+                <tr>
+                <th>歌曲名</th>
+                <th>评分</th>
+                <th>时间</th>
+                <th>删除</th>
+                </tr>
+        </thead>
+        <tbody>
+                {% for i in rate %}
+                <tr>
+                        <td>{{ i.music.name }}</td>
+                        <td>{{ i.mark }}</td>
+                        <td>{{ i.create_time }}</td>
+                        <td><a href="{% url 'delete_rate' i.id %}">确定</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+</table>
+{% endblock %}
+

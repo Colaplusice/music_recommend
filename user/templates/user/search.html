@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+<h3 style="text-align:center">搜索结果</h3>
+{% for i in music %}
+<div class="container-fluid">
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+   <img class="img-thumbnail music-image" alt="140x140" src="{{ music.pic }}" width=140px
+                         height=140px/>		</div>
+		<div class="col-md-7 column">
+			<h3>
+				<a href="{% url 'music' i.id %}">	{{ i.title }}</a>
+			</h3>
+			<p>{{ i.intro | slice:":100" }}......</p>
+			<p>浏览量:{{ i.num }}</p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="container-fluid">
+    <ul class="pagination" id="pager">
+        {#上一页按钮开始#}
+        {# 如果当前页有上一页#}
+        {% if music.has_previous %}
+            {#  当前页的上一页按钮正常使用#}
+            <li class="previous"><a href="/allmusic/?page={{ music.previous_page_number }}">上一页</a></li>
+        {% else %}
+            {# 当前页的不存在上一页时,上一页的按钮不可用#}
+            <li class="previous disabled"><a href="#">上一页</a></li>
+        {% endif %}
+        {#上一页按钮结束#}
+        {# 页码开始#}
+
+                <li class="item active"><a href="/allmusic/?page={{ music.number }}">{{ music.number }}</a></li>
+                <li class="item"><a href="/allmusic/?page={{ music.number|add:1 }}">{{ music.number|add:1 }}</a></li>
+              <li class="item"><a href="/allmusic/?page={{ music.number|add:2 }}">{{ music.number|add:2 }}</a></li>
+        {#页码结束#}
+        {# 下一页按钮开始#}
+        {% if music.has_next %}
+            <li class="next"><a href="/allmusic/?page={{ music.next_page_number }}">下一页</a></li>
+        {% else %}
+            <li class="next disabled"><a href="#">下一页</a></li>
+        {% endif %}
+	        <li class="item"><a href="#">
+                        {{ music.number }}/{{ music.paginator.num_pages }}</a>
+        </li>
+
+    </ul>
+</div>
+{% endblock %}

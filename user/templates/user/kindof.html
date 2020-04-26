@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+    {% for tag in tags %}
+            <div class="col-md-1" style="margin-top: 15px">
+      <a class="tags-input h2" href="{% url 'kind' tag.id %}"><span class="label label-primary">{{ tag.name }}</span> </a>
+                </div>
+    {% endfor %}
+{% endblock %}

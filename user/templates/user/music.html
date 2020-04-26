@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block right-panel-content %}
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-md-2 column">
+                <img class="img-thumbnail music-image" alt="140x140" src="{{ music.pic }}" width=140px
+                     height=140px/></div>
+            <div class="col-md-10 column">
+                <ol class="list-unstyled">
+                    <li>
+                        歌曲名:{{ music.name }}
+                    </li>
+                    <li>
+                        歌手: {{ music.artist }}
+                    </li>
+                    <li>
+                        标签:
+                        {% if music.tags.all %}
+                            {% for tag in music.tags.all %}
+                                {{ tag }}
+                            {% endfor %}
+                        {% else %}
+                            无
+                        {% endif %}
+                    </li>
+                    <li>
+                        网站评分:
+                        {% if music_rate %}
+                            {{ music_rate }}
+                        {% else %}
+                            无
+                        {% endif %}
+                    </li>
+                    {% if user_rate is not None %}
+                        <h4>您已经进行打分: {{ user_rate.mark }}</h4>
+                    {% else %}
+                        <li>
+                            <form action="{% url 'score' music.id %}" method="post">
+                                {% csrf_token %}
+                                <p>添加评分</p>
+                                <select name="score">
+                                    <option>1.0</option>
+                                    <option>2.0</option>
+                                    <option>3.0</option>
+                                    <option>4.0</option>
+                                    <option>5.0</option>
+                                </select>
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </form>
+                        </li>
+
+                    {% endif %}
+                    <li>
+                        评分人数:{{ music.rate_set.count }}
+                    </li>
+                    <li>
+                        收藏人数:{{ music.collect.count }} ---{% if is_collect %}
+                        <a href="{% url 'decollect' music.id %}">取消收藏</a>{% else %}
+                        <a href="{% url 'collect' music.id %}">点击收藏</a>{% endif %}
+                    </li>
+                    <li>
+                        <div class="bdsharebuttonbox">
+                            <p>分享到:</p>
+                            <a href="#" class="bds_weixin" data-cmd="weixin"
+                               title="分享到微信"></a><a href="#" class="bds_sqq"
+                                                    data-cmd="sqq"
+                                                    title="分享到QQ好友"></a><a href="#"
+                                                                           class="bds_tsina"
+                                                                           data-cmd="tsina"
+                                                                           title="分享到新浪微博"></a><a
+                                href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#"
+                                                                                                    class="bds_douban"
+                                                                                                    data-cmd="douban"
+                                                                                                    title="分享到豆瓣网"></a><a
+                                href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#"
+                                                                                                   class="bds_qzone"
+                                                                                                   data-cmd="qzone"
+                                                                                                   title="分享到QQ空间"></a>
+                        </div>
+                        <script>window._bd_share_config = {
+                            "common": {
+                                "bdSnsKey": {},
+                                "bdText": "",
+                                "bdMini": "1",
+                                "bdMiniList": false,
+                                "bdPic": "",
+                                "bdStyle": "1",
+                                "bdSize": "24"
+                            }, "share": {}
+                        };
+                        with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <form class="form" fole="form" action="{% url 'comment' music.id %}" method="post">
+                    {% csrf_token %}
+                    <textarea placeholder="快来说说点什么吧" class="form-control" name="comment" cols="10" rows="10"></textarea>
+                    <button type="submit" class="btn btn-default">提交评论</button>
+                </form>
+                <p>评论:({{ music.score.com }})</p>
+                {% for i in comments %}
+                    <blockquote>
+                        <p>{{ i.user.name }}:</p>
+                        <p>{{ i.content }}
+                        </p>
+                        <small>{{ i.addtime }}-----------<a href="{% url 'good' i.id music.id %}">点赞({{ i.good }})</a>
+                        </small>
+                    </blockquote>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
