@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block right-panel-content %}
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+        <h2 align="center">用户注册</h2>
+        <div class="col-md-4 col-md-offset-4">
+        <form action="{% url 'register' %}" method='post' autocomplete="on">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field.errors }}
+                        {{ field }}
+                </div>
+                {% endfor %}
+                    <button type="reset"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit"><span class="glyphicon glyphicon-ok"></span></button>
+          </form>
+        </div>
+        {% endblock %}

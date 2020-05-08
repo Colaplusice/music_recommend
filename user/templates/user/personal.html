@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+        {% block right-panel-content %}
+        <div class="container-fluid">
+        <form action="{% url 'personal' %}" method='post' autocomplete="on">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field.errors }}
+                        {{ field }}
+                </div>
+                {% endfor %}
+                    <button type="reset"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit"><span class="glyphicon glyphicon-ok"></span></button>   
+		    
+	<table class="table">
+		<thead>
+		<th><a href="{% url 'mycollect' %}">我的收藏</a></th>
+{#		<th><a href="{% url 'myjoin' %}">我的活动</a></th>#}
+		<th><a href="{% url 'my_comments' %}">我的评论</a></th>
+		<th><a href="{% url 'my_rate' %}">我的评分</a></th>
+		</thead>
+	</table>
+	</form>
+	</div>
+        {% endblock %}
+

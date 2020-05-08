@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="{% url 'begin' %}" method="post" role='form'>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputPassword1">用户名</label>
+            <input class="form-control" id="exampleInputPassword1" name="username">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">注册邮箱</label>
+
+            <input type="email" class="form-control" id="exampleInputPassword1" name="email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">新密码</label>
+            <input class="form-control" name="password" id="password1">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword2">确认密码</label>
+            <input class="form-control" id="password2">
+        </div>
+        <script>
+            function check() {
+                var password1 = $('#password1').val();
+                var password2 = $('#password2').val();
+                if (password1 == password2) {
+                    return true;
+                } else {
+                    alert("两次密码不正确");
+                    return false;
+                }
+            }
+        </script>
+        <button type="submit" class="btn btn-primary" onclick=check()>保存继续添加</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/musics.png">
+    <title>歌曲推荐系统</title>
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/static/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<nav class="navbar  navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">歌曲推荐系统</a>
+            <button type="button" id="sidebar-control" class="navbar-toggle collapsed"data-target="#sidebar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse " aria-expanded="true">
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.login_in == True %}
+                    <li><a href="{% url 'personal' %}">{{ request.session.name }}</a></li>
+                    <li><a href="{% url 'logout' %}">退出</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">登录</a></li>
+                    <li><a href="{% url 'register' %}">注册</a></li>
+                {% endif %}
+            </ul>
+            <form class="navbar-form navbar-right" action="{% url 'search' %}" method='post'>
+                {% csrf_token %}
+                <input type="text" class="form-control" name="search" placeholder="输入关键字">
+                <button class="btn btn-default" type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar"  id="sidebar">
+            <ul class="nav nav-sidebar navbar-collapse" >
+                <li class="active"><a href="{% url 'all_music' %}">全部歌曲<span class="sr-only">(current)</span></a></li>
+                <li><a href="{% url 'most_view' %}">浏览最多</a></li>
+                <li><a href="{% url 'most_mark' %}">评分最多</a></li>
+                <li><a href="{% url 'hot_music' %}">收藏最多</a></li>
+                <li><a href="{% url 'latest_music' %}">最新歌曲</a></li>
+                <li><a href="{% url 'kindof' %}">分类歌曲</a></li>
+                {#                <li><a href="{% url 'golden_horse' %}">金马奖</a></li>#}
+                {#                <li><a href="{% url 'oscar' %}">奥斯卡奖</a></li>#}
+                <li><a href="{% url 'week_reco' %}">我猜你喜欢</a></li>
+                <li><a href="{% url 'item_recommend' %}">item推荐</a></li>
+                {#                <li><a href="{% url 'monthitem' %}">月度推荐歌曲</a></li>#}
+                <li><a href="{% url 'personal' %}">我的信息</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ">
+            {% block right-panel-content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{% block bottom-js %}
+    <!--put your own js here in your page -->
+    <script>
+        $('#sidebar-control').click(
+            function () {
+                $('#sidebar').toggle();
+                $('.main').toggleClass('col-xs-offset-5');
+            }
+        );
+
+    </script>
+{% endblock %}
+
+</body>
+</html>
