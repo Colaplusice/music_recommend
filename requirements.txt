@@ -1,4 +1,4 @@
-django==2.2.1
+django==2.2.27
 pymysql
 icecola
 django-appconf==1.0.3
