@@ -14,4 +14,4 @@ django-registration-redux==2.5
 django-rest-swagger==2.2.0
 django-simpleui==2.1
 djangorestframework==3.9.1
-Pillow==5.4.1
+Pillow==9.0.1
